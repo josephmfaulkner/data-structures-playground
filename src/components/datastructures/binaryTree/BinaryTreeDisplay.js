@@ -11,6 +11,8 @@ class BinaryTreeDisplay extends React.Component {
         super(props);
     }
 
+
+
     componentDidMount() {
         this.app = new PIXI.Application(
                 {
@@ -35,22 +37,35 @@ class BinaryTreeDisplay extends React.Component {
             .pinch()
             .decelerate();
 
-        this.viewPort.zoomPercent(-0.50,true);    
+        this.viewPort.zoomPercent(-0.75,true);    
     
         this.canvas.appendChild(this.app.view);
     
         this.app.stage.addChild(this.viewPort);
     
-        //this.seatGroup = new SeatGroup(this.viewPort, {...this.props});
-    
-        this.seatGroup = new PIXI.Container;
-        this.viewPort.addChild(this.seatGroup);
+        this.refreshTreeDisplay();
 
-        this.renderBinaryTree(this.props.treeData, 500, 500, 1);
-    
         this.app.start();
 
-      }
+    }
+
+    componentDidUpdate(nextProps, nextState) {
+        if(this.props.treeData != nextProps.treeData)
+        {
+            this.refreshTreeDisplay();
+        }
+
+        if(this.props.scale != nextProps.scale)
+        {
+            this.refreshTreeDisplay();
+        }
+        
+    }
+
+    refreshTreeDisplay(){
+        this.viewPort.removeChildren();
+        this.renderBinaryTree(this.props.treeData, 500, -900, 1);
+    }
 
     componentWillUnmount() {
         this.app.stop();
@@ -109,7 +124,7 @@ class BinaryTreeDisplay extends React.Component {
         }
 
         let xOffSet = 30 / (2 ** level) * this.props.scale;
-        let yOffSet = 5 * this.props.scale;
+        let yOffSet = 300 ;//* (2 * level - 1);
 
         if(treeNode.leftNode != null)
         {

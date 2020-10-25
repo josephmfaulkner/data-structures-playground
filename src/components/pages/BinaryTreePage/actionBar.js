@@ -14,6 +14,11 @@ import Button from 'react-bootstrap/Button';
 
 class ActionBar extends React.Component {
     
+    constructor(props)
+    {
+        super(props);
+    }
+
     render()
     {
         return(
@@ -31,10 +36,11 @@ class ActionBar extends React.Component {
                                 <Form inline>
                                     <Form.Group controlId="formBasicRangeCustom">
                                         <Form.Label>Scale</Form.Label>
-                                        <Form.Control type="range" custom />
+                                        <Form.Control type="range" min="20" max="1000" value={this.props.scale}  custom onChange={(event) => {this.props.changeScaleCallback(event.target.value);}}/>
                                     </Form.Group>
                                 </Form>
                                 </Nav>
+                                <Button variant="outline-primary" onClick={this.props.randomTreeCallback}>Random</Button>
 
                         </Navbar>
                     </Col>

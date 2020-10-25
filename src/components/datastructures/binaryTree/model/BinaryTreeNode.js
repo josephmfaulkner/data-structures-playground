@@ -65,8 +65,6 @@ class BinaryTreeNode {
           array[randomIndex] = temporaryValue;
         }
       
-        console.log(array);
-
         return array;
       }
 

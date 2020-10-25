@@ -19,12 +19,30 @@ class BinaryTreePage extends React.Component {
         }
     }
 
+    randomTree()
+    {
+        this.setState({
+            treeData: BinaryTreeNode.createRandomTree(50)
+        });
+    }
+
+    changeScale(newScaleValue)
+    {
+        this.setState({
+            scale: newScaleValue
+        });
+    }
+
     render()
     {
         return(
             <div>
                 <BinaryTreeDisplay treeData={this.state.treeData} scale={this.state.scale} />
-                <ActionBar />
+                <ActionBar 
+                    randomTreeCallback={this.randomTree.bind(this)}
+                    changeScaleCallback={this.changeScale.bind(this)}  
+                    scale={this.state.scale}
+                />
             </div>
         );
     }
