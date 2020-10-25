@@ -22,13 +22,20 @@ class ActionBar extends React.Component {
                     <Col>
                         <Navbar bg="dark" variant="dark" expand="lg" fixed="bottom">    
                                 <Nav className="mr-auto">
-                                <Form inline className="sm-12">
+                                <Form inline className="sm-12 mr-sm-4" >
                                     <FormControl type="text" placeholder="nodeNum, [nodeNum, nodeNum, nodeNum]" className="mr-sm-2" />
                                     <Button variant="outline-primary">Add</Button>
                                     <Button variant="outline-primary">Remove</Button>
                                     <Button variant="outline-primary">Search</Button>
                                 </Form>
+                                <Form inline>
+                                    <Form.Group controlId="formBasicRangeCustom">
+                                        <Form.Label>Scale</Form.Label>
+                                        <Form.Control type="range" custom />
+                                    </Form.Group>
+                                </Form>
                                 </Nav>
+
                         </Navbar>
                     </Col>
                 </Row>

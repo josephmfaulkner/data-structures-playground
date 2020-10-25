@@ -2,8 +2,14 @@ import React from 'react';
 import * as PIXI from 'pixi.js';
 import { Viewport } from 'pixi-viewport'
 
+import BinaryTreeNode from './model/BinaryTreeNode';
+import { findAllInRenderedTree } from 'react-dom/test-utils';
+
 class BinaryTreeDisplay extends React.Component {
 
+    constructor(props){
+        super(props);
+    }
 
     componentDidMount() {
         this.app = new PIXI.Application(
@@ -40,13 +46,10 @@ class BinaryTreeDisplay extends React.Component {
         this.seatGroup = new PIXI.Container;
         this.viewPort.addChild(this.seatGroup);
 
-
-        this.testTreeRender();
-
+        this.renderBinaryTree(this.props.treeData, 500, 500, 1);
     
         this.app.start();
-    
-        //this.seatGroup.testAdd();
+
       }
 
     componentWillUnmount() {
@@ -54,48 +57,79 @@ class BinaryTreeDisplay extends React.Component {
     }  
 
 
-    testTreeRender(){
-
-        let line = new PIXI.Graphics();
-        line.lineStyle(4, 0xFFFFFF, 1);
-        line.moveTo(0, 0);
-        line.lineTo(200, 200);
-        line.position.x = 500;
-        line.position.y = 250;
-        this.viewPort.addChild(line);
-
-        line = new PIXI.Graphics();
-        line.lineStyle(4, 0xFFFFFF, 1);
-        line.moveTo(0, 0);
-        line.lineTo(-200, 200);
-        line.position.x = 500;
-        line.position.y = 250;
-        this.viewPort.addChild(line);
-
+    drawNode(treeNode, x, y){
         let circle = new PIXI.Graphics();
         circle.lineStyle(4, 0x000000, 1);
         circle.beginFill(0xFFFFFF, 1);
-        circle.drawCircle(500, 250, 50);
+        circle.drawCircle(x , y, 50);
         circle.endFill();
+        treeNode.nodeRender = circle;
         this.viewPort.addChild(circle);
-    
-        circle = new PIXI.Graphics();
-        circle.lineStyle(4, 0x000000, 1);
-        circle.beginFill(0xFFFFFF, 1);
-        circle.drawCircle(700, 450, 50);
-        circle.endFill();
-        this.viewPort.addChild(circle);
-        
-        circle = new PIXI.Graphics();
-        circle.lineStyle(4, 0x000000, 1);
-        circle.beginFill(0xFFFFFF, 1);
-        circle.drawCircle(300, 450, 50);
-        circle.endFill();
-        this.viewPort.addChild(circle);
+
+
+        let textStyle = new PIXI.TextStyle({
+            fontFamily: 'Arial',
+            fontSize: 70,
+            strokeThickness: 3,
+            wordWrap: false,
+            wordWrapWidth: 440,
+            lineJoin: 'round'
+        });
+
+        let nodeData = new PIXI.Text(treeNode.data, textStyle);
+        nodeData.x = x - 40;
+        nodeData.y = y - 42;
+        this.viewPort.addChild(nodeData);
 
     }
 
+    drawBranch(x1, y1, x2, y2)
+    {
+        let xDiff = x2 - x1; 
+        let yDiff = y2 - y1;
 
+        let branchLine = new PIXI.Graphics();
+
+        branchLine.lineStyle(10, 0xFFFFFF, 1);
+        branchLine.moveTo(0, 0);
+        branchLine.lineTo(xDiff, yDiff);
+        branchLine.position.x = x1;
+        branchLine.position.y = y1;
+
+        this.viewPort.addChild(branchLine);
+    }
+
+
+
+
+    renderBinaryTree(treeNode, x, y, level){
+        if(treeNode == null)
+        {
+            return;
+        }
+
+        let xOffSet = 30 / (2 ** level) * this.props.scale;
+        let yOffSet = 5 * this.props.scale;
+
+        if(treeNode.leftNode != null)
+        {
+            this.drawBranch(x , y, x - xOffSet, y + yOffSet);
+            this.renderBinaryTree(treeNode.leftNode, x - xOffSet, y + yOffSet, level + 1);
+        }
+
+        if(treeNode.rightNode != null)
+        {
+            this.drawBranch(x , y, x + xOffSet, y + yOffSet);
+            this.renderBinaryTree(treeNode.rightNode, x + xOffSet, y + yOffSet, level + 1);
+        }
+
+        this.drawNode(treeNode, x, y);
+
+        
+
+        
+
+    }
 
     render(){
         return(
