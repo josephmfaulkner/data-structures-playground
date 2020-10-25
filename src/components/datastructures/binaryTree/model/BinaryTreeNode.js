@@ -1,6 +1,4 @@
-const { default: BinaryTreeDisplay } = require("../BinaryTreeDisplay");
-
-class BinaryTreeNode {
+class BinaryTreeNode { 
     constructor(data = null, leftNode = null, rightNode = null)
     {
 
