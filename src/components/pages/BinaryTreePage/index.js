@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
+import { setTree, setTarget, searchNodeStep} from '../../datastructures/binaryTree/model/actions';
 
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -11,19 +14,22 @@ import ActionBar from './actionBar';
 
 class BinaryTreePage extends React.Component {
 
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
+        this.props.setTree(BinaryTreeNode.createRandomTree(25));
+
         this.state = {
-            scale: 50,
-            treeData : BinaryTreeNode.createRandomTree(25)
+            scale: 50
         }
+    }
+
+    onComponentDidMount(){
+        this.props.setTree(BinaryTreeNode.createRandomTree(25));
     }
 
     randomTree()
     {
-        this.setState({
-            treeData: BinaryTreeNode.createRandomTree(50)
-        });
+        this.props.setTree(BinaryTreeNode.createRandomTree(25));
     }
 
     changeScale(newScaleValue)
@@ -37,7 +43,11 @@ class BinaryTreePage extends React.Component {
     {
         return(
             <div>
-                <BinaryTreeDisplay treeData={this.state.treeData} scale={this.state.scale} />
+                <BinaryTreeDisplay 
+                    treeData={this.props.binaryTree} 
+                    cursorNode={this.props.cursor}
+                    scale={this.state.scale} 
+                    />
                 <ActionBar 
                     randomTreeCallback={this.randomTree.bind(this)}
                     changeScaleCallback={this.changeScale.bind(this)}  
@@ -49,4 +59,21 @@ class BinaryTreePage extends React.Component {
     
 }
 
-export default BinaryTreePage;
+
+
+
+
+const mapStateToProps = (state /*ownProps*/) => {
+    return {
+        binaryTree: state.binaryTree.binaryTree,
+        cursor: state.binaryTree.cursor
+    }
+}
+
+const mapDispatchToProps = {
+    setTree, 
+    setTarget, 
+    searchNodeStep
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BinaryTreePage);
