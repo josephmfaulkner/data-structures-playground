@@ -103,8 +103,6 @@ class BinaryTreeDisplay extends React.Component {
             perc += 0.05;
             if(perc > 1.00)
             {
-                console.log("REMOVE ANIMATE");
-                console.log(animateFunction);
                 ticker.remove(animateFunction);
             }
 
