@@ -1,5 +1,6 @@
 import { act } from 'react-dom/test-utils';
 import { SET_TREE, SET_TARGET, SEARCH_NODE_STEP, IN_ORDER_TRAVERSAL } from './actions';
+import BinaryTreeIterator from './iterator';
 
 class TreeAlgorithmState {
     constructor()
@@ -29,25 +30,8 @@ function binaryTree(state = initialState, action)
                 target : action.payload
             });  
         case SEARCH_NODE_STEP:
-            let newCursor = null;
-            let success = false;
-            if(state.cursor === null)
-            {
-                newCursor = state.binaryTree;
-            }
-            else if(state.target === state.cursor.data)
-            {
-                newCursor = state.cursor;
-                success = true;
-            }
-            else if(state.target < state.cursor.data)
-            {
-                newCursor = state.cursor.leftNode;
-            }
-            else
-            {
-                newCursor = state.cursor.rightNode;
-            }
+            let iteratorNext = BinaryTreeIterator.searchNext(state);
+            let { newCursor, success } = iteratorNext;
 
             return Object.assign({}, state, {
                 cursor : newCursor,
