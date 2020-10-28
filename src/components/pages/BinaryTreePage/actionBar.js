@@ -2,8 +2,8 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 
-import { setTree, setTarget, searchNodeStep} from '../../datastructures/binaryTree/model/actions';
-import BinaryTreeNode from '../../datastructures/binaryTree/model/BinaryTreeNode';
+import { setTree, setTarget, searchNodeStep} from '../../../datastructures/binaryTree/model/actions';
+import BinaryTreeNode from '../../../datastructures/binaryTree/model/BinaryTreeNode';
 
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';

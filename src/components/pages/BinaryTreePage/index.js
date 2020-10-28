@@ -1,15 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { setTree, setTarget, searchNodeStep} from '../../datastructures/binaryTree/model/actions';
+import { setTree, setTarget, searchNodeStep} from '../../../datastructures/binaryTree/model/actions';
 
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 
-import BinaryTreeNode from '../../datastructures/binaryTree/model/BinaryTreeNode';
+import BinaryTreeNode from '../../../datastructures/binaryTree/model/BinaryTreeNode';
 
-import BinaryTreeDisplay from '../../datastructures/binaryTree/BinaryTreeDisplay';
+import BinaryTreeDisplay from '../../../datastructures/binaryTree/BinaryTreeDisplay';
 import ActionBar from './actionBar';
 
 class BinaryTreePage extends React.Component {

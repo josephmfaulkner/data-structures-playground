@@ -1,7 +1,7 @@
 import {createStore, applyMiddleware, combineReducers} from 'redux';
 import {composeWithDevTools} from 'redux-devtools-extension';
 
-import { binaryTree } from './components/datastructures/binaryTree/model/reducers';
+import { binaryTree } from './datastructures/binaryTree/model/reducers';
 
 const store = createStore(
     combineReducers({
