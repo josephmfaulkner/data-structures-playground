@@ -1,40 +1,68 @@
 class BinaryTreeIterator {
 
-    static searchNext(state)
+    constructor(cursor, targetValue, success = false, done = false)
     {
-        let newCursor = null; 
-        let newSuccess = false;
-        
-        console.log(state.target)
+        this.cursor = cursor;
+        this.targetValue = targetValue;
+        this.success = success;
+        this.done = done;
+    }
 
-        if(state.cursor === null || state.success === true)
+    searchNext()
+    {
+        let newCursor = this.cursor; 
+        console.log(this.targetValue);
+
+        if(this.cursor === null || this.success === true)
         {
-            newCursor = state.binaryTree;
+            newCursor = this.cursor;
         }
-        else if(state.target == state.cursor.data)
+        else if(this.targetValue == this.cursor.data)
         {
-            newCursor = state.cursor;
-            newSuccess = true;
+            this.done = true;
+            this.success = true;
+            //newCursor = this.cursor;
         }
-        else if(state.target < state.cursor.data && state.cursor.leftNode !== null)
+        else if(this.targetValue < this.cursor.data && this.cursor.leftNode !== null)
         {
-            newCursor = state.cursor.leftNode;
+            newCursor = this.cursor.leftNode;
         }
-        else if(state.cursor.rightNode !== null)
+        else if(this.cursor.rightNode !== null)
         {
-            newCursor = state.cursor.rightNode;
+            newCursor = this.cursor.rightNode;
         }
-        else if(state.cursor.leftNode == null && state.cursor.rightNode == null)
+        else if(this.cursor.leftNode == null && this.cursor.rightNode == null)
         {
-            newCursor = state.cursor;
-            newSuccess = false;
+            newCursor = this.cursor;
+            this.done = true;
+            this.success = false;
         } 
 
-        return { 
-            newCursor: newCursor, 
-            success: newSuccess
-        };
+        console.log(this.cursor.data);
+        this.cursor = newCursor;
 
+        console.log(this.done, this.success);
+
+    }
+
+    getCursor()
+    {
+        return this.cursor;
+    }
+
+    getTargetValue()
+    {
+        return this.targetValue;
+    }
+
+    getSuccess()
+    {
+        return this.success;
+    }
+
+    getDone()
+    {
+        return this.done;
     }
 
 }

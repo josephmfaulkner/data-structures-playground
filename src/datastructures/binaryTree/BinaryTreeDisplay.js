@@ -10,9 +10,9 @@ class BinaryTreeDisplay extends React.Component {
     constructor(props){
         super(props);
         this.cursorNodeDisplay = null;
+        this.success = false;
+        this.done = false;
     }
-
-
 
     componentDidMount() {
         this.app = new PIXI.Application(
@@ -65,19 +65,51 @@ class BinaryTreeDisplay extends React.Component {
         {
             this.updateCursorDisplay();
         }
+
+        if(this.props.done != nextProps.done || this.props.success != nextProps.success)
+        {
+            console.log(this.props.done, this.props.success);
+            if(this.props.done == true)
+            {
+                if(this.props.success == true)
+                {
+                    this.setFound();
+                }
+                else
+                {
+                    this.setNotFound();
+                }
+            }
+        }
         
     }
+
+    setNotFound()
+    {
+        console.log('SETNOTFOUND');
+        this.cursorNodeDisplay.tint = 0xFF0000;
+    }
+
+    setFound()
+    {
+        console.log('SETFOUND');
+        this.cursorNodeDisplay.tint = 0x00FF00;
+    }
+    
+    setCursorNodeDisplay()
+    {
+        this.cursorNodeDisplay = new PIXI.Graphics();
+        this.cursorNodeDisplay.lineStyle(4, 0x000000, 1);
+        this.cursorNodeDisplay.beginFill(0xFFFFFF, 0.5);
+        this.cursorNodeDisplay.drawCircle(0 , 0, 70);
+        this.cursorNodeDisplay.endFill();
+        this.viewPort.addChild(this.cursorNodeDisplay);    }
 
     updateCursorDisplay()
     {
         if(this.cursorNodeDisplay == null)
         {
-            this.cursorNodeDisplay = new PIXI.Graphics();
-            this.cursorNodeDisplay.lineStyle(4, 0x000000, 1);
-            this.cursorNodeDisplay.beginFill(0xFF00FF, 0.5);
-            this.cursorNodeDisplay.drawCircle(0 , 0, 70);
-            this.cursorNodeDisplay.endFill();
-            this.viewPort.addChild(this.cursorNodeDisplay);
+            this.setCursorNodeDisplay();
         }
 
         let oldX = this.cursorNodeDisplay.x;
@@ -87,9 +119,8 @@ class BinaryTreeDisplay extends React.Component {
         let newY = this.props.cursorNode.nodeRender.y;
 
         console.log(newX, newY);
-
-        //this.cursorNodeDisplay.moveTo(newX, newY);
-        //this.cursorNodeDisplay.position.set(newX, newY);
+        
+        this.cursorNodeDisplay.tint = 0x00BBFF;
         this.animate(this.cursorNodeDisplay, oldX, oldY, newX, newY, 0.0);
     }
 
@@ -117,8 +148,17 @@ class BinaryTreeDisplay extends React.Component {
 
 
     refreshTreeDisplay(){
+        this.cursorNodeDisplay = null
         this.viewPort.removeChildren();
         this.renderBinaryTree(this.props.treeData, 500, -900, 1);
+        
+        this.setCursorNodeDisplay();
+        if(this.props.cursorNode !== null)
+        {
+            this.cursorNodeDisplay.position.set(this.props.cursorNode.nodeRender.x, this.props.cursorNode.nodeRender.y);
+        }
+        
+        
     }
 
     componentWillUnmount() {

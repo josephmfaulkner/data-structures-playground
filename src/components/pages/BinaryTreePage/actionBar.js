@@ -2,7 +2,7 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 
-import { setTree, setTarget, searchNodeStep} from '../../../datastructures/binaryTree/model/actions';
+import { setTree, setTarget, searchForNode } from '../../../datastructures/binaryTree/model/actions';
 import BinaryTreeNode from '../../../datastructures/binaryTree/model/BinaryTreeNode';
 
 import Container from 'react-bootstrap/Container';
@@ -48,9 +48,7 @@ class ActionBar extends React.Component {
                                         onChange={(event) => {this.updateTargetValue(event.target.value);}}
                                         value={this.state.targetValue}
                                     />
-                                    <Button variant="outline-primary">Add</Button>
-                                    <Button variant="outline-primary">Remove</Button>
-                                    <Button variant="outline-primary" onClick={() => {this.props.searchNodeStep();}}>Search</Button>
+                                    <Button variant="outline-primary" onClick={() => {this.props.searchForNode();}}>Search</Button>
                                 </Form>
                                 <Form inline>
                                     <Form.Group controlId="formBasicRangeCustom">
@@ -59,7 +57,7 @@ class ActionBar extends React.Component {
                                     </Form.Group>
                                 </Form>
                                 </Nav>
-                                <Button variant="outline-primary" onClick={() => {this.props.setTree(BinaryTreeNode.createRandomTree(100));}}>Random</Button>
+                                <Button variant="outline-primary" onClick={() => {this.props.setTree(BinaryTreeNode.createRandomTree(26));}}>Random</Button>
 
                         </Navbar>
                     </Col>
@@ -79,7 +77,7 @@ const mapStateToProps = (state /*ownProps*/) => {
 const mapDispatchToProps = {
     setTree, 
     setTarget, 
-    searchNodeStep
+    searchForNode
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ActionBar);

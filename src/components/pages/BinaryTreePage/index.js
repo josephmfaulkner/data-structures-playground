@@ -16,20 +16,11 @@ class BinaryTreePage extends React.Component {
 
     constructor(props){
         super(props);
-        this.props.setTree(BinaryTreeNode.createRandomTree(25));
+        this.props.setTree(BinaryTreeNode.createRandomTree(51));
 
         this.state = {
             scale: 50
         }
-    }
-
-    onComponentDidMount(){
-        this.props.setTree(BinaryTreeNode.createRandomTree(25));
-    }
-
-    randomTree()
-    {
-        this.props.setTree(BinaryTreeNode.createRandomTree(25));
     }
 
     changeScale(newScaleValue)
@@ -46,10 +37,11 @@ class BinaryTreePage extends React.Component {
                 <BinaryTreeDisplay 
                     treeData={this.props.binaryTree} 
                     cursorNode={this.props.cursor}
+                    done={this.props.done}
+                    success={this.props.success}
                     scale={this.state.scale} 
                     />
                 <ActionBar 
-                    randomTreeCallback={this.randomTree.bind(this)}
                     changeScaleCallback={this.changeScale.bind(this)}  
                     scale={this.state.scale}
                 />
@@ -66,7 +58,9 @@ class BinaryTreePage extends React.Component {
 const mapStateToProps = (state /*ownProps*/) => {
     return {
         binaryTree: state.binaryTree.binaryTree,
-        cursor: state.binaryTree.cursor
+        cursor: state.binaryTree.cursor, 
+        done: state.binaryTree.done,
+        success: state.binaryTree.success
     }
 }
 
